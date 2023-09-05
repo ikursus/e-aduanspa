@@ -15,8 +15,10 @@ Route::post('/contact', fn() => 'Borang hubungi telah berjaya dikirimkan');
 
 Route::get('/aduan', fn() => 'Halaman aduan');
 
+// Route untuk paparkan borang aduan
 Route::get('/aduan/borang', [AduanController::class, 'create']);
-Route::post('/aduan/borang', fn() => 'Borang telah berjaya dikirimkan');
+// Route untuk terima data daripada borang aduan
+Route::post('/aduan/borang', [AduanController::class, 'store']);
 
 Route::get('/aduan/{id}', fn() => 'Halaman maklumat / status aduan');
 

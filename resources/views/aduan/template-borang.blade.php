@@ -8,7 +8,11 @@
     <div class="card-body">
 
 
-        <form>
+        <form method="POST" action="">
+
+            @csrf
+            {{ csrf_field() }}
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="mb-3">
               <label class="form-label">Nama Pengadu</label>

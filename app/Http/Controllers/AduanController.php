@@ -27,7 +27,12 @@ class AduanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Dapatkan SEMUA data daripada borang aduan
+        $data = $request->all();
+
+        // Dump and die
+        // return $data;
+        dd($data);
     }
 
     /**
