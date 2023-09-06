@@ -20,6 +20,8 @@ Route::get('/aduan/borang', [AduanController::class, 'create']);
 // Route untuk terima data daripada borang aduan
 Route::post('/aduan/borang', [AduanController::class, 'store']);
 
+Route::get('/aduan/terima-kasih', [AduanController::class, 'thanks'])->name('aduan.thanks');
+
 Route::get('/aduan/{id}', fn() => 'Halaman maklumat / status aduan');
 
 // Halaman pengurusan / admin

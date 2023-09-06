@@ -42,8 +42,13 @@
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Maklumat Aduan</label>
-              <textarea class="form-control" name="maklumat_aduan"></textarea>
+              <label class="form-label">Kandungan Aduan</label>
+              <textarea class="form-control" name="kandungan_aduan"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Lokapsi Aduan</label>
+              <textarea class="form-control" name="lokasi_aduan"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>

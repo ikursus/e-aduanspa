@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AduanController extends Controller
 {
@@ -27,25 +28,32 @@ class AduanController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'nama_pengadu' => 'required|min:3|string', // Cara 1 pengasingan rule. Menggunakan |
             'email_pengadu' => ['required', 'email:filter', 'string'], // Cara 2 pengasingan rule. Guna Array
             'telefon_pengadu' => ['sometimes', 'nullable'],
             'jenis_aduan' => ['required', 'min:3', 'string'],
-            'maklumat_aduan' => ['required', 'min:3', 'string']
+            'kandungan_aduan' => ['required', 'min:3', 'string'],
+            'lokasi_aduan' => ['sometimes', 'nullable']
         ]);
 
+        // Define data json untuk maklumat_aduan
+        $maklumatAduan = [
+            'kandungan_aduan' => $request->input('kandungan_aduan'),
+            'lokasi_aduan' => $request->input('lokasi_aduan'),
+        ];
 
+        // Masukkan data ke dalam table aduan
+        DB::table('aduan')->insert([
+            'nama_pengadu' => $request->input('nama_pengadu'),
+            'email_pengadu' => $request->input('email_pengadu'),
+            'telefon_pengadu' => $request->input('telefon_pengadu'),
+            'jenis_aduan' => $request->input('jenis_aduan'),
+            'maklumat_aduan' => json_encode($maklumatAduan)
+        ]);
 
-        // Dapatkan SEMUA data daripada borang aduan
-        // $data = $request->all();
-
-        // $data = $request->only('nama_pengadu', 'email_pengadu');
-        // $data = $request->except('_token');
-
-        // Dump and die
-        // return $data;
-        dd($data);
+        // Jika tiada masalah, beri respon kepada client
+        return redirect()->route('aduan.thanks');
     }
 
     /**
@@ -78,5 +86,10 @@ class AduanController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function thanks()
+    {
+        return view('aduan.template-tq');
     }
 }
