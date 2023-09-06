@@ -27,8 +27,21 @@ class AduanController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'nama_pengadu' => 'required|min:3|string', // Cara 1 pengasingan rule. Menggunakan |
+            'email_pengadu' => ['required', 'email:filter', 'string'], // Cara 2 pengasingan rule. Guna Array
+            'telefon_pengadu' => ['sometimes', 'nullable'],
+            'jenis_aduan' => ['required', 'min:3', 'string'],
+            'maklumat_aduan' => ['required', 'min:3', 'string']
+        ]);
+
+
+
         // Dapatkan SEMUA data daripada borang aduan
-        $data = $request->all();
+        // $data = $request->all();
+
+        // $data = $request->only('nama_pengadu', 'email_pengadu');
+        // $data = $request->except('_token');
 
         // Dump and die
         // return $data;

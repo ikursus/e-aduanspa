@@ -7,6 +7,7 @@
 <div class="card">
     <div class="card-body">
 
+        @include('layout.alerts')
 
         <form method="POST" action="">
 
@@ -15,13 +16,19 @@
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="mb-3">
-              <label class="form-label">Nama Pengadu</label>
-              <input type="text" class="form-control" name="nama_pengadu">
+                <label class="form-label">Nama Pengadu</label>
+                <input type="text" class="form-control @error('nama_pengadu') is-invalid @enderror" name="nama_pengadu">
+                @error('nama_pengadu')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
-              <label class="form-label">Email Pengadu</label>
-              <input type="email" class="form-control" name="email_pengadu">
+                <label class="form-label">Email Pengadu</label>
+                <input type="email" class="form-control @error('email_pengadu') is-invalid @enderror" name="email_pengadu">
+                @error('email_pengadu')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
