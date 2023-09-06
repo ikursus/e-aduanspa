@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('aduan', function (Blueprint $table) {
             $table->id();
+            $table->string('no_tiket');
             $table->string('nama_pengadu');
             $table->string('email_pengadu');
             $table->string('telefon_pengadu')->nullable();

@@ -13,8 +13,7 @@ Route::get('/dashboard', DashboardController::class);
 Route::get('/contact', fn() => 'Halaman Hubungi');
 Route::post('/contact', fn() => 'Borang hubungi telah berjaya dikirimkan');
 
-Route::get('/aduan', fn() => 'Halaman aduan');
-
+Route::get('/aduan', [AduanController::class, 'index']);
 // Route untuk paparkan borang aduan
 Route::get('/aduan/borang', [AduanController::class, 'create']);
 // Route untuk terima data daripada borang aduan

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class AduanController extends Controller
      */
     public function index()
     {
-        //
+        return view('aduan.template-index');
     }
 
     /**
@@ -42,9 +43,12 @@ class AduanController extends Controller
             'kandungan_aduan' => $request->input('kandungan_aduan'),
             'lokasi_aduan' => $request->input('lokasi_aduan'),
         ];
+        // Generate no tiket untuk semakan status
+        $no_tiket = Str::random('8'); // Hasilkan 8 huruf no.tiket
 
         // Masukkan data ke dalam table aduan
         DB::table('aduan')->insert([
+            'no_tiket' => $no_tiket,
             'nama_pengadu' => $request->input('nama_pengadu'),
             'email_pengadu' => $request->input('email_pengadu'),
             'telefon_pengadu' => $request->input('telefon_pengadu'),
@@ -53,7 +57,7 @@ class AduanController extends Controller
         ]);
 
         // Jika tiada masalah, beri respon kepada client
-        return redirect()->route('aduan.thanks');
+        return redirect()->route('aduan.thanks', ['tiket' => $no_tiket]);
     }
 
     /**
@@ -88,8 +92,20 @@ class AduanController extends Controller
         //
     }
 
-    public function thanks()
+    public function thanks(Request $request)
     {
-        return view('aduan.template-tq');
+        // Tetapkan $variable $aduan sebagai null JIKA tiada tiket
+        $aduan = NULL;
+
+        // Dapatkan data aduan jika ada tiket
+        if ($request->has('tiket') && $request->filled('tiket'))
+        {
+            // Cari rekod tiket
+            $aduan = DB::table('aduan')
+            ->where('no_tiket', '=', $request->input('tiket'))
+            ->first(); // LIMIT 1
+        }
+
+        return view('aduan.template-tq', compact('aduan'));
     }
 }
