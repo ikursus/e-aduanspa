@@ -31,6 +31,20 @@
             <td>JENIS ADUAN</td>
             <td>{{ $aduan->jenis_aduan }}</td>
         </tr>
+
+        @if (!is_null($aduan->maklumat_aduan))
+
+            @foreach (json_decode($aduan->maklumat_aduan) as $key => $value)
+
+            <tr>
+                <td>{{ strtoupper($key) }}</td>
+                <td>{{ $value }}</td>
+            </tr>
+
+            @endforeach
+
+        @endif
+
         <tr>
             <td>STATUS ADUAN</td>
             <td>{{ $aduan->status_aduan }}</td>
