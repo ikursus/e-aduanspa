@@ -5,7 +5,7 @@
 <div class="card mt-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        DataTable Example
+        Senarai Aduan
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
@@ -46,3 +46,8 @@
 </div>
 
 @endsection
+
+@push('js-extra')
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('/') }}themes/sbadmin/js/datatables-simple-demo.js"></script>
+@endpush

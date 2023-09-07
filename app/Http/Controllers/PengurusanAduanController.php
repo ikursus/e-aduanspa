@@ -14,6 +14,8 @@ class PengurusanAduanController extends Controller
     {
         // Dapatkan senarai aduan
         $senaraiAduan = DB::table('aduan')->get();
+        // option selain ->get();
+        // ->cursor();
 
         return view('pengurusan.aduan.template-index', compact('senaraiAduan'));
     }
