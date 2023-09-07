@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PengurusanAduanController extends Controller
 {
@@ -11,7 +12,10 @@ class PengurusanAduanController extends Controller
      */
     public function index()
     {
-        //
+        // Dapatkan senarai aduan
+        $senaraiAduan = DB::table('aduan')->get();
+
+        return view('pengurusan.aduan.template-index', compact('senaraiAduan'));
     }
 
     /**
