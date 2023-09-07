@@ -11,9 +11,9 @@
 
         @include('layout.alerts')
 
-        <form method="POST" action="{{ route('admin.aduan.bulk.update') }}">
+        {{-- <form method="POST" action="{{ route('admin.aduan.bulk.update') }}">
             @csrf
-            @method('PATCH')
+            @method('PATCH') --}}
         <table id="datatablesSimple">
             <thead>
                 <tr>
@@ -60,7 +60,7 @@
                         </button>
 
                         <!-- Modal Buka -->
-                        {{-- <form method="POST" action="{{ route('admin.aduan.destroy', $aduan->id) }}">
+                        <form method="POST" action="{{ route('admin.aduan.destroy', $aduan->id) }}">
                             @csrf
                             @method('DELETE')
                         <div class="modal fade" id="modal-delete-{{ $aduan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
 
-                        </form> --}}
+                        </form>
                         <!-- Modal Tutup -->
 
                     </td>
@@ -90,9 +90,9 @@
             </tbody>
         </table>
 
-        <button type="submit" class="btn btn-primary mt-4">Kemaskini Bulk</button>
+        {{-- <button type="submit" class="btn btn-primary mt-4">Kemaskini Bulk</button>
 
-        </form>
+        </form> --}}
 
     </div>
 </div>

@@ -67,7 +67,8 @@ class PengurusanAduanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    // public function update(Request $request, string $id)
+    public function update(Request $request, Aduan $aduan)
     {
         $request->validate([
             'nama_pengadu' => 'required|min:3|string', // Cara 1 pengasingan rule. Menggunakan |
@@ -85,17 +86,24 @@ class PengurusanAduanController extends Controller
         ];
 
         // Kemaskini data ke dalam table aduan
-        DB::table('aduan')
-        ->where('id', '=', $id)
-        //->where('created_at', '>=', '2020')
-        ->update([
-            'nama_pengadu' => $request->input('nama_pengadu'),
-            'email_pengadu' => $request->input('email_pengadu'),
-            'telefon_pengadu' => $request->input('telefon_pengadu'),
-            'jenis_aduan' => $request->input('jenis_aduan'),
-            'maklumat_aduan' => json_encode($maklumatAduan),
-            'updated_at' => now() // Carbon::now()
-        ]);
+        // DB::table('aduan')
+        // ->where('id', '=', $id)
+        // //->where('created_at', '>=', '2020')
+        // ->update([
+        //     'nama_pengadu' => $request->input('nama_pengadu'),
+        //     'email_pengadu' => $request->input('email_pengadu'),
+        //     'telefon_pengadu' => $request->input('telefon_pengadu'),
+        //     'jenis_aduan' => $request->input('jenis_aduan'),
+        //     'maklumat_aduan' => json_encode($maklumatAduan),
+        //     'updated_at' => now() // Carbon::now()
+        // ]);
+
+        $data = $request->all();
+        $data['maklumat_aduan'] = json_encode($maklumatAduan);
+
+        // $aduan = Aduan::where('no_tiket', '=', $id)->first();
+        // $aduan = Aduan::find($id);
+        $aduan->update($data);
 
         // Jika tiada masalah, beri respon kepada client
         return redirect()->route('admin.aduan.index');
@@ -104,9 +112,12 @@ class PengurusanAduanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    // public function destroy(string $id)
+    public function destroy(Aduan $aduan)
     {
-        DB::table('aduan')->where('id', '=', $id)->delete();
+        // DB::table('aduan')->where('id', '=', $id)->delete();
+        // $aduan = Aduan::find($id);
+        $aduan->delete();
 
         // Jika tiada masalah, beri respon kepada client
         return redirect()->route('admin.aduan.index')->with('mesej-berjaya', 'Rekod berjaya dihapuskan');
