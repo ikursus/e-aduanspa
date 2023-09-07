@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +14,11 @@ class PengurusanAduanController extends Controller
     public function index()
     {
         // Dapatkan senarai aduan
-        $senaraiAduan = DB::table('aduan')->get();
+        // $senaraiAduan = DB::table('aduan')->get();
         // option selain ->get();
         // ->cursor();
+
+        $senaraiAduan = Aduan::get();
 
         return view('pengurusan.aduan.template-index', compact('senaraiAduan'));
     }
@@ -47,10 +50,13 @@ class PengurusanAduanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    //public function edit(string $id)
+    public function edit(Aduan $aduan)
     {
         // Dapatkan data aduan yang ingin di edit
-        $aduan = DB::table('aduan')->where('id', $id)->first();
+        // $aduan = DB::table('aduan')->where('id', $id)->first();
+        // $aduan = Aduan::where('id', $id)->first(); // Aduan::where('id', $id)->firstOrFail();
+        // $aduan = Aduan::find($id); // Aduan::findOrFail($id);
 
         // Decode data json dari column maklumat aduan
         $maklumatAduan = json_decode($aduan->maklumat_aduan, true);
@@ -100,10 +106,23 @@ class PengurusanAduanController extends Controller
      */
     public function destroy(string $id)
     {
-        DB::table('aduan')->where('id', $id)->delete();
+        DB::table('aduan')->where('id', '=', $id)->delete();
 
         // Jika tiada masalah, beri respon kepada client
         return redirect()->route('admin.aduan.index')->with('mesej-berjaya', 'Rekod berjaya dihapuskan');
 
+    }
+
+    public function updateBulk(Request $request)
+    {
+        $dataId = $request->input('id_aduan');
+
+        DB::table('aduan')
+        ->whereIn('id', $dataId)
+        ->update([
+            'status_aduan' => 'updated'
+        ]);
+
+        return redirect()->route('admin.aduan.index')->with('mesej-berjaya', 'Rekod yang dipilih berjaya dikemaskini');
     }
 }

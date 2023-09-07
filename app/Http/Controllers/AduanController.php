@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aduan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,15 +48,32 @@ class AduanController extends Controller
         $no_tiket = Str::random('8'); // Hasilkan 8 huruf no.tiket
 
         // Masukkan data ke dalam table aduan
-        DB::table('aduan')->insert([
-            'no_tiket' => $no_tiket,
-            'nama_pengadu' => $request->input('nama_pengadu'),
-            'email_pengadu' => $request->input('email_pengadu'),
-            'telefon_pengadu' => $request->input('telefon_pengadu'),
-            'jenis_aduan' => $request->input('jenis_aduan'),
-            'maklumat_aduan' => json_encode($maklumatAduan),
-            'created_at' => now() // Carbon::now()
-        ]);
+        // DB::table('aduan')->insert([
+        //     'no_tiket' => $no_tiket,
+        //     'nama_pengadu' => $request->input('nama_pengadu'),
+        //     'email_pengadu' => $request->input('email_pengadu'),
+        //     'telefon_pengadu' => $request->input('telefon_pengadu'),
+        //     'jenis_aduan' => $request->input('jenis_aduan'),
+        //     'maklumat_aduan' => json_encode($maklumatAduan),
+        //     'created_at' => now() // Carbon::now()
+        // ]);
+
+        // Cara 1 Simpan data menggunakan Model
+        // $aduan = new Aduan;
+        // $aduan->no_tiket = $no_tiket;
+        // $aduan->nama_pengadu = $request->input('nama_pengadu');
+        // $aduan->email_pengadu = $request->input('email_pengadu');
+        // $aduan->telefon_pengadu = $request->input('telefon_pengadu');
+        // $aduan->jenis_aduan = $request->input('jenis_aduan');
+        // $aduan->maklumat_aduan = json_encode($maklumatAduan);
+        // $aduan->save();
+
+        // Cara 2 Simpan data menggunakan Model
+        $data = $request->all();
+        $data['no_tiket'] = $no_tiket;
+        $data['maklumat_aduan'] = json_encode($maklumatAduan);
+
+        Aduan::create($data);
 
         // Jika tiada masalah, beri respon kepada client
         return redirect()->route('aduan.thanks', ['tiket' => $no_tiket]);

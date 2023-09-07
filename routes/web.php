@@ -6,6 +6,7 @@ use App\Http\Controllers\PelawatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengurusanUserController;
 use App\Http\Controllers\PengurusanAduanController;
+use App\Http\Controllers\PengurusanEmployeeController;
 
 // Halaman pelawat
 Route::get('/', [PelawatController::class, 'halamanUtama'])->name('homepage');
@@ -54,8 +55,11 @@ Route::group([
 ], function () {
 
     // Route untuk pengurusan aduan
+    Route::patch('aduan/bulk', [PengurusanAduanController::class, 'updateBulk'])->name('aduan.bulk.update');
     Route::resource('aduan', PengurusanAduanController::class);
     Route::resource('users', PengurusanUserController::class);
+
+    Route::get('employee', [PengurusanEmployeeController::class, 'index'])->name('employee.index');
 
     // Cara untuk memilih function yang diperlukan sahaja untuk route resource
     //Route::resource('aduan', PengurusanAduanController::class)->only('create', 'store');
