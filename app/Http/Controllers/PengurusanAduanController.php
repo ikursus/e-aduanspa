@@ -49,7 +49,10 @@ class PengurusanAduanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Dapatkan data aduan yang ingin di edit
+        $aduan = DB::table('aduan')->where('id', $id)->first();
+
+        return view('pengurusan.aduan.template-edit', compact('aduan'));
     }
 
     /**

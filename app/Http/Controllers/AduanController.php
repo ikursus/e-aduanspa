@@ -53,7 +53,8 @@ class AduanController extends Controller
             'email_pengadu' => $request->input('email_pengadu'),
             'telefon_pengadu' => $request->input('telefon_pengadu'),
             'jenis_aduan' => $request->input('jenis_aduan'),
-            'maklumat_aduan' => json_encode($maklumatAduan)
+            'maklumat_aduan' => json_encode($maklumatAduan),
+            'created_at' => now() // Carbon::now()
         ]);
 
         // Jika tiada masalah, beri respon kepada client

@@ -17,6 +17,7 @@
                     <th>Jenis Aduan</th>
                     <th>Tarikh Aduan</th>
                     <th>Status Aduan</th>
+                    <th>Tindakan</th>
                 </tr>
             </thead>
             <tfoot>
@@ -27,6 +28,7 @@
                     <th>Jenis Aduan</th>
                     <th>Tarikh Aduan</th>
                     <th>Status Aduan</th>
+                    <th>Tindakan</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -38,6 +40,9 @@
                     <td>{{ $aduan->jenis_aduan }}</td>
                     <td>{{ $aduan->created_at }}</td>
                     <td>{{ $aduan->status_aduan }}</td>
+                    <td>
+                        <a href="{{ route('admin.aduan.edit', $aduan->id) }}" class="btn btn-info">Edit</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
