@@ -52,7 +52,10 @@ class PengurusanAduanController extends Controller
         // Dapatkan data aduan yang ingin di edit
         $aduan = DB::table('aduan')->where('id', $id)->first();
 
-        return view('pengurusan.aduan.template-edit', compact('aduan'));
+        // Decode data json dari column maklumat aduan
+        $maklumatAduan = json_decode($aduan->maklumat_aduan, true);
+
+        return view('pengurusan.aduan.template-edit', compact('aduan', 'maklumatAduan'));
     }
 
     /**
@@ -60,7 +63,35 @@ class PengurusanAduanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nama_pengadu' => 'required|min:3|string', // Cara 1 pengasingan rule. Menggunakan |
+            'email_pengadu' => ['required', 'email:filter', 'string'], // Cara 2 pengasingan rule. Guna Array
+            'telefon_pengadu' => ['sometimes', 'nullable'],
+            'jenis_aduan' => ['required', 'min:3', 'string'],
+            'kandungan_aduan' => ['required', 'min:3', 'string'],
+            'lokasi_aduan' => ['sometimes', 'nullable']
+        ]);
+
+        // Define data json untuk maklumat_aduan
+        $maklumatAduan = [
+            'kandungan_aduan' => $request->input('kandungan_aduan'),
+            'lokasi_aduan' => $request->input('lokasi_aduan'),
+        ];
+
+        // Kemaskini data ke dalam table aduan
+        DB::table('aduan')
+        ->where('id', $id)
+        ->update([
+            'nama_pengadu' => $request->input('nama_pengadu'),
+            'email_pengadu' => $request->input('email_pengadu'),
+            'telefon_pengadu' => $request->input('telefon_pengadu'),
+            'jenis_aduan' => $request->input('jenis_aduan'),
+            'maklumat_aduan' => json_encode($maklumatAduan),
+            'updated_at' => now() // Carbon::now()
+        ]);
+
+        // Jika tiada masalah, beri respon kepada client
+        return redirect()->route('admin.aduan.index');
     }
 
     /**

@@ -43,12 +43,12 @@
 
             <div class="mb-3">
               <label class="form-label">Kandungan Aduan</label>
-              <textarea class="form-control" name="kandungan_aduan">{{ $aduan->kandungan_aduan }}</textarea>
+              <textarea class="form-control" name="kandungan_aduan">{{ $maklumatAduan['kandungan_aduan'] }}</textarea>
             </div>
 
             <div class="mb-3">
               <label class="form-label">Lokasi Aduan</label>
-              <textarea class="form-control" name="lokasi_aduan"></textarea>
+              <textarea class="form-control" name="lokasi_aduan">{{ $maklumatAduan['lokasi_aduan'] }}</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
