@@ -8,6 +8,9 @@
         Senarai Aduan
     </div>
     <div class="card-body">
+
+        @include('layout.alerts')
+
         <table id="datatablesSimple">
             <thead>
                 <tr>
@@ -48,7 +51,10 @@
                             Delete
                         </button>
 
-                        <!-- Modal -->
+                        <!-- Modal Buka -->
+                        <form method="POST" action="{{ route('admin.aduan.destroy', $aduan->id) }}">
+                            @csrf
+                            @method('DELETE')
                         <div class="modal fade" id="modal-delete-{{ $aduan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                             <div class="modal-content">
@@ -61,11 +67,14 @@
                                 </div>
                                 <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-danger">Teruskan Delete</button>
+                                <button type="submit" class="btn btn-danger">Teruskan Delete</button>
                                 </div>
                             </div>
                             </div>
                         </div>
+
+                        </form>
+                        <!-- Modal Tutup -->
 
                     </td>
                 </tr>

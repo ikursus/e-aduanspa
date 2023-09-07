@@ -100,6 +100,10 @@ class PengurusanAduanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('aduan')->where('id', $id)->delete();
+
+        // Jika tiada masalah, beri respon kepada client
+        return redirect()->route('admin.aduan.index')->with('mesej-berjaya', 'Rekod berjaya dihapuskan');
+
     }
 }
