@@ -80,7 +80,8 @@ class PengurusanAduanController extends Controller
 
         // Kemaskini data ke dalam table aduan
         DB::table('aduan')
-        ->where('id', $id)
+        ->where('id', '=', $id)
+        //->where('created_at', '>=', '2020')
         ->update([
             'nama_pengadu' => $request->input('nama_pengadu'),
             'email_pengadu' => $request->input('email_pengadu'),
